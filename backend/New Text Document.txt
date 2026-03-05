@@ -1,3 +1,8 @@
 u:navya
 pass:123456
 email:amnavya91@gmail.com
+
+uiser2
+  "username": "Niya",
+  "email": "niys@gmail.com",
+  "password": "12345"
