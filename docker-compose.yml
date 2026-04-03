@@ -26,3 +26,12 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+
+  scraper:
+    build: ./backend
+    container_name: scraper
+    depends_on:
+      - postgres_db
+    volumes:
+      - ./backend:/app
+    command: sh -c "sleep 15 && while true; do python manage.py run_scraper; sleep 600; done"

@@ -50,38 +50,48 @@ function AuthPage() {
     };
 
     return (
-        <div className="container">
-            <div className="card">
-                <h2>Price Tracker</h2>
+        <div className="auth-bg d-flex justify-content-center align-items-center vh-100">
+            <div className="card shadow-lg p-5" style={{ width: "400px", borderRadius: "15px" }}>
+                <h2 className="text-center mb-4 text-dark fw-bold">Price Tracker</h2>
 
-                <h3>{isLogin ? "Login" : "Signup"}</h3>
+                <h4 className="text-center mb-4 text-secondary">{isLogin ? "Login" : "Signup"}</h4>
 
-                <input
-                    type="email"
-                    placeholder="Enter Email"
-                    onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                    }
-                />
+                <div className="mb-3">
+                    <input
+                        type="email"
+                        className="form-control form-control-lg"
+                        placeholder="Enter Email"
+                        onChange={(e) =>
+                            setFormData({ ...formData, email: e.target.value })
+                        }
+                    />
+                </div>
 
-                <input
-                    type="password"
-                    placeholder="Enter Password"
-                    onChange={(e) =>
-                        setFormData({ ...formData, password: e.target.value })
-                    }
-                />
+                <div className="mb-3">
+                    <input
+                        type="password"
+                        className="form-control form-control-lg"
+                        placeholder="Enter Password"
+                        onChange={(e) =>
+                            setFormData({ ...formData, password: e.target.value })
+                        }
+                    />
+                </div>
 
-                <button onClick={handleSubmit}>
+                <button className="btn btn-primary btn-lg w-100 mt-2 rounded-pill" onClick={handleSubmit}>
                     {isLogin ? "Login" : "Signup"}
                 </button>
 
-                <p className="switch-text">
-                    {isLogin ? "Don't have an account?" : "Already have an account?"}
-                    <span onClick={() => setIsLogin(!isLogin)}>
-                        {isLogin ? " Sign up" : " Login"}
+                <div className="switch-text mt-4 text-center">
+                    <span className="text-muted">{isLogin ? "Don't have an account? " : "Already have an account? "}</span>
+                    <span 
+                        className="text-primary fw-bold" 
+                        style={{ cursor: "pointer" }} 
+                        onClick={() => setIsLogin(!isLogin)}
+                    >
+                        {isLogin ? "Sign up" : "Login"}
                     </span>
-                </p>
+                </div>
             </div>
         </div>
     );

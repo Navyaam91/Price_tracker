@@ -67,76 +67,92 @@ function Dashboard() {
     };
 
     return (
-        <div style={{ padding: "40px" }}>
-            <h2>Dashboard</h2>
+        <div className="container mt-5">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2>Dashboard</h2>
+                <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
+            </div>
 
-            <button onClick={handleLogout}>Logout</button>
+            <div className="card shadow-sm mb-4">
+                <div className="card-header bg-primary text-white">
+                    <h3 className="h5 mb-0">Add Product</h3>
+                </div>
+                <div className="card-body">
+                    <div className="row g-3">
+                        <div className="col-md-6">
+                            <input
+                                className="form-control"
+                                placeholder="Product Title"
+                                value={formData.title}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, title: e.target.value })
+                                }
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <input
+                                className="form-control"
+                                placeholder="Product URL"
+                                value={formData.url}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, url: e.target.value })
+                                }
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <input
+                                className="form-control"
+                                placeholder="Current Price"
+                                type="number"
+                                value={formData.current_price}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, current_price: e.target.value })
+                                }
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <input
+                                className="form-control"
+                                placeholder="Target Price"
+                                type="number"
+                                value={formData.target_price}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, target_price: e.target.value })
+                                }
+                            />
+                        </div>
+                        <div className="col-12 mt-3 text-end">
+                            <button className="btn btn-success" onClick={handleAddProduct}>Add Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <hr />
+            <hr className="my-4" />
 
-            <h3>Add Product</h3>
-
-            <input
-                placeholder="Product Title"
-                value={formData.title}
-                onChange={(e) =>
-                    setFormData({ ...formData, title: e.target.value })
-                }
-            />
-
-            <input
-                placeholder="Product URL"
-                value={formData.url}
-                onChange={(e) =>
-                    setFormData({ ...formData, url: e.target.value })
-                }
-            />
-
-            <input
-                placeholder="Current Price"
-                type="number"
-                value={formData.current_price}
-                onChange={(e) =>
-                    setFormData({ ...formData, current_price: e.target.value })
-                }
-            />
-
-            <input
-                placeholder="Target Price"
-                type="number"
-                value={formData.target_price}
-                onChange={(e) =>
-                    setFormData({ ...formData, target_price: e.target.value })
-                }
-            />
-
-            <button onClick={handleAddProduct}>Add Product</button>
-
-            <hr />
-
-            <h3>Your Products</h3>
+            <h3 className="mb-3">Your Products</h3>
 
             {products.length === 0 ? (
-                <p>No products added yet.</p>
+                <div className="alert alert-info">No products added yet.</div>
             ) : (
-                products.map((product) => (
-                    <div
-                        key={product.id}
-                        style={{
-                            border: "1px solid #ddd",
-                            padding: "10px",
-                            marginBottom: "10px",
-                            borderRadius: "8px",
-                        }}
-                    >
-                        <h4>{product.title}</h4>
-                        <p>Current Price: ₹{product.current_price}</p>
-                        <p>Target Price: ₹{product.target_price}</p>
-                        <a href={product.url} target="_blank">
-                            View Product
-                        </a>
-                    </div>
-                ))
+                <div className="row g-4">
+                    {products.map((product) => (
+                        <div key={product.id} className="col-md-4">
+                            <div className="card shadow-sm h-100">
+                                <div className="card-body">
+                                    <h5 className="card-title fw-bold text-primary">{product.title}</h5>
+                                    <p className="card-text mb-1"><span className="text-muted">Current Price:</span> ₹{product.current_price}</p>
+                                    <p className="card-text mb-2"><span className="text-muted">Target Price:</span> <span className="text-success fw-bold">₹{product.target_price}</span></p>
+                                </div>
+                                <div className="card-footer bg-white border-top-0 pt-0">
+                                    <a href={product.url} className="btn btn-outline-primary w-100" target="_blank" rel="noopener noreferrer">
+                                        View Product
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );
