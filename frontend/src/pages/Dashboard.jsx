@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [formData, setFormData] = useState({
         title: "",
@@ -15,8 +17,8 @@ function Dashboard() {
     // 🔹 Fetch Products
     const fetchProducts = async () => {
         try {
-            const res = await axios.get(
-                "http://127.0.0.1:8000/api/products/",
+            const res = await api.get(
+                "/api/products/",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -26,6 +28,11 @@ function Dashboard() {
             setProducts(res.data);
         } catch (err) {
             console.log(err.response?.data);
+            if (err.response?.status === 401) {
+                alert("Session expired. Please log in again.");
+                localStorage.removeItem("access");
+                navigate("/");
+            }
         }
     };
 
@@ -36,8 +43,8 @@ function Dashboard() {
     // 🔹 Add Product
     const handleAddProduct = async () => {
         try {
-            await axios.post(
-                "http://127.0.0.1:8000/api/products/",
+            await api.post(
+                "/api/products/",
                 formData,
                 {
                     headers: {
@@ -57,13 +64,19 @@ function Dashboard() {
             });
         } catch (err) {
             console.log(err.response?.data);
-            alert("Error adding product ❌");
+            if (err.response?.status === 401) {
+                alert("Session expired. Please log in again.");
+                localStorage.removeItem("access");
+                navigate("/");
+            } else {
+                alert("Error adding product ❌");
+            }
         }
     };
 
     const handleLogout = () => {
         localStorage.removeItem("access");
-        window.location.href = "/";
+        navigate("/");
     };
 
     return (

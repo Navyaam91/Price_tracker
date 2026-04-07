@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import api from "./api";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import "./App.css";
@@ -15,8 +16,8 @@ function AuthPage() {
     const handleSubmit = async () => {
         try {
             if (isLogin) {
-                const res = await axios.post(
-                    "http://127.0.0.1:8000/api/token/",
+                const res = await api.post(
+                    "/api/token/",
                     {
                         username: formData.email,
                         password: formData.password,
@@ -31,8 +32,8 @@ function AuthPage() {
                 // 🔥 Redirect here
                 navigate("/dashboard");
             } else {
-                await axios.post(
-                    "http://127.0.0.1:8000/api/accounts/register/",
+                await api.post(
+                    "/api/accounts/register/",
                     {
                         username: formData.email,
                         email: formData.email,
